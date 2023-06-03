@@ -25,12 +25,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = str(os.getenv('DJANGO_SECRET_KEY', get_random_secret_key()))
 
-ENV = str(os.getenv('ENV'))
+ENV = str(os.getenv('DJANGO_ENV'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if ENV == 'dev' else False
 
-ALLOWED_HOSTS = str(os.getenv('ALLOWED_HOSTS', ['localhost'])).split(',')
+ALLOWED_HOSTS = str(os.getenv('DJANGO_ALLOWED_HOSTS', ['localhost'])).split(',')
 
 # Application definition
 
@@ -126,9 +126,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

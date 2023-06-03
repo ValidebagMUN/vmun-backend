@@ -134,7 +134,9 @@ celerybeat.pid
 # Environments
 .env
 .env.staging
+.env.staging.proxy-companion
 .env.prod
+.env.prod.proxy-companion
 .venv
 env/
 venv/
