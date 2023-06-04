@@ -137,7 +137,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-if not DEBUG:
+if ENV == "prod":
     import sentry_sdk
     from sentry_sdk.integrations.django import DjangoIntegration
 
