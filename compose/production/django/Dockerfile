@@ -13,7 +13,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 RUN apk update \
-    && apk add g++ gcc libc-dev libffi-dev krb5-pkinit krb5-dev krb5 snappy-dev python3-dev musl-dev
+    && apk add g++ gcc libc-dev libffi-dev krb5-pkinit krb5-dev krb5 snappy-dev python3-dev musl-dev bash
 
 # install dependencies
 COPY ./requirements.txt .
