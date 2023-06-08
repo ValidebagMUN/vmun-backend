@@ -5,7 +5,7 @@ services:
     build:
       context: ./
       dockerfile: ./compose/production/django/Dockerfile
-    command: /home/app/start
+    command: ./start
     volumes:
       - static_volume:/home/app/web/staticfiles
     expose:
@@ -17,7 +17,7 @@ services:
     build:
       context: .
       dockerfile: ./compose/production/django/Dockerfile
-    command: /home/app/start-celeryworker
+    command: ./start-celeryworker
     volumes:
       - .:/app
     env_file:
@@ -29,7 +29,7 @@ services:
     build:
       context: .
       dockerfile: ./compose/production/django/Dockerfile
-    command: /home/app/start-celerybeat
+    command: ./start-celerybeat
     volumes:
       - .:/app
     env_file:
@@ -41,7 +41,7 @@ services:
     build:
       context: .
       dockerfile: ./compose/production/django/Dockerfile
-    command: /home/app/start-flower
+    command: ./start-flower
     volumes:
       - .:/app
     env_file:
