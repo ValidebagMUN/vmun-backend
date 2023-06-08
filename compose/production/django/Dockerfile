@@ -45,23 +45,23 @@ COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
 RUN pip install --no-cache /wheels/*
 
-COPY ./compose/production/django/start /start
+COPY ./compose/production/django/start /home/app/start
 RUN sed -i 's/\r$//g' /start
-RUN chmod +x /start
+RUN chmod +x /home/app/start
 
-COPY ./compose/production/django/celery/worker/start /start-celeryworker
+COPY ./compose/production/django/celery/worker/start /home/app/start-celeryworker
 RUN sed -i 's/\r$//g' /start-celeryworker
-RUN chmod +x /start-celeryworker
+RUN chmod +x /home/app/start-celeryworker
 
 
-COPY ./compose/production/django/celery/beat/start /start-celerybeat
+COPY ./compose/production/django/celery/beat/start /home/app/start-celerybeat
 RUN sed -i 's/\r$//g' /start-celerybeat
-RUN chmod +x /start-celerybeat
+RUN chmod +x /home/app/start-celerybeat
 
 
-COPY ./compose/production/django/celery/flower/start /start-flower
+COPY ./compose/production/django/celery/flower/start /home/app/start-flower
 RUN sed -i 's/\r$//g' /start-flower
-RUN chmod +x /start-flower
+RUN chmod +x /home/app/start-flower
 
 # copy project
 COPY . $APP_HOME
