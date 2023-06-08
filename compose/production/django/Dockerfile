@@ -63,5 +63,3 @@ RUN chmod +x /home/app/web/start-flower
 
 # copy project
 COPY . $APP_HOME
-
-WORKDIR $HOME
