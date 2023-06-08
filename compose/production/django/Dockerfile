@@ -45,31 +45,23 @@ COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
 RUN pip install --no-cache /wheels/*
 
-COPY ./compose/production/django/start /home/app/start
-RUN sed -i 's/\r$//g' /home/app/start
-RUN chmod +x /home/app/start
+COPY ./compose/production/django/start /home/app/web/start
+RUN sed -i 's/\r$//g' /home/app/web/start
+RUN chmod +x /home/app/web/start
 
-COPY ./compose/production/django/celery/worker/start /home/app/start-celeryworker
-RUN sed -i 's/\r$//g' /home/app/start-celeryworker
-RUN chmod +x /home/app/start-celeryworker
+COPY ./compose/production/django/celery/worker/start /home/app/web/start-celeryworker
+RUN sed -i 's/\r$//g' /home/app/web/start-celeryworker
+RUN chmod +x /home/app/web/start-celeryworker
 
+COPY ./compose/production/django/celery/beat/start /home/app/web/start-celerybeat
+RUN sed -i 's/\r$//g' /home/app/web/start-celerybeat
+RUN chmod +x /home/app/web/start-celerybeat
 
-COPY ./compose/production/django/celery/beat/start /home/app/start-celerybeat
-RUN sed -i 's/\r$//g' /home/app/start-celerybeat
-RUN chmod +x /home/app/start-celerybeat
-
-
-COPY ./compose/production/django/celery/flower/start /home/app/start-flower
-RUN sed -i 's/\r$//g' /home/app/start-flower
-RUN chmod +x /home/app/start-flower
+COPY ./compose/production/django/celery/flower/start /home/app/web/start-flower
+RUN sed -i 's/\r$//g' /home/app/web/start-flower
+RUN chmod +x /home/app/web/start-flower
 
 # copy project
 COPY . $APP_HOME
-
-# chown all the files to the app user
-RUN chown -R app:app $APP_HOME
-
-# change to the app user
-USER app
 
 WORKDIR $HOME
