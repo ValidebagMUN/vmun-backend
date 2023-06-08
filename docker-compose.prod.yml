@@ -41,7 +41,7 @@ services:
     build:
       context: .
       dockerfile: ./compose/production/django/Dockerfile
-    command: /start-flower
+    command: /home/app/start-flower
     volumes:
       - .:/app
     env_file:
