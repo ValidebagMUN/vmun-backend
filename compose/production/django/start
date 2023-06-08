@@ -7,4 +7,4 @@ set -o nounset
 
 python manage.py collectstatic --noinput
 
-gunicorn config.asgi --bind 0.0.0.0:8000 -k uvicorn.workers.UvicornWorker
+gunicorn vmun_backend.asgi:application --bind 0.0.0.0:8000 -k uvicorn.workers.UvicornWorker
