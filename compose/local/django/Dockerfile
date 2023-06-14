@@ -8,7 +8,7 @@ RUN pip install --upgrade pip
 # RUN apt install --no-cache libffi-dev krb5-pkinit krb5-dev krb5
 RUN apt-get update \
   # dependencies for building Python packages
-  && apt-get install -y build-essential g++ gcc libc-dev libkrb5-dev libsnappy-dev \
+  && apt-get install -y build-essential g++ gcc libc-dev libkrb5-dev libsnappy-dev postgresql netcat \
   # Translations dependencies
   && apt-get install -y gettext \
   # cleaning up unused files
@@ -23,6 +23,10 @@ COPY ./compose/local/django/start /start
 RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 
+COPY ./compose/local/django/entrypoint.sh /entrypoint.sh
+RUN sed -i 's/\r$//g' /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 COPY ./compose/local/django/celery/worker/start /start-celeryworker
 RUN sed -i 's/\r$//g' /start-celeryworker
 RUN chmod +x /start-celeryworker
@@ -36,3 +40,5 @@ RUN sed -i 's/\r$//g' /start-flower
 RUN chmod +x /start-flower
 
 WORKDIR /app
+
+ENTRYPOINT ["/entrypoint.sh"]

@@ -33,6 +33,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
+    'djoser',
 ]
 
 MIDDLEWARE = [
@@ -74,12 +76,13 @@ SITE_ID = 1
 
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'vmun_dev',
-        'ENFORCE_SCHEMA': False,
-        'CLIENT': {
-            'host': str(os.getenv('DB_STRING'))
-        }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME', 'vmun_dev'),
+        "USER": os.getenv("DB_USER", "postgres"),
+        "PASSWORD": os.getenv("DB_PASSWORD", "vmunpasswd"),
+        "HOST": os.getenv("DB_HOST", "localhost"),
+        "PORT": os.getenv("DB_PORT", "5432"),
+
     }
 }
 
@@ -111,11 +114,40 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Email SMTP Server
+
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True if os.getenv('EMAIL_USE_TLS').lower() == 'true' else False
+
 # Rest API
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissions',
     ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication'
+    ]
+}
+
+# Djoser
+
+DJOSER = {
+    'LOGIN_FIELD': 'email',
+    'PASSWORD_RESET_CONFIRM_URL': '',
+    'USERNAME_RESET_CONFIRM_URL': '',
+    'SEND_ACTIVATION_EMAIL': True,
+    'ACTIVATION_URL': '',
+    'LOGOUT_ON_PASSWORD_CHANGE': True,
+    'PERMISSIONS': {
+        'user_create': ['rest_framework.permissions.IsAdminUser'],
+    },
+
 }
 
 # Internationalization
