@@ -49,6 +49,10 @@ COPY ./compose/production/django/start /home/app/web/start
 # RUN sed -i 's/\r$//g' /home/app/web/start
 RUN chmod +x /home/app/web/start
 
+COPY ./compose/production/django/entrypoint.sh /home/app/web/entrypoint.sh
+# RUN sed -i 's/\r$//g' /home/app/web/entrypoint.sh
+RUN chmod +x /home/app/web/entrypoint.sh
+
 COPY ./compose/production/django/celery/worker/start /home/app/web/start-celeryworker
 # RUN sed -i 's/\r$//g' /home/app/web/start-celeryworker
 RUN chmod +x /home/app/web/start-celeryworker
@@ -63,3 +67,5 @@ RUN chmod +x /home/app/web/start-flower
 
 # copy project
 COPY . $APP_HOME
+
+ENTRYPOINT ["/home/app/web/entrypoint.sh"]
