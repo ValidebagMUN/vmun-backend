@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'djoser',
     'django_celery_beat',
     'debug_toolbar',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
